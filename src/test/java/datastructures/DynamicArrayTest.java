@@ -9,18 +9,18 @@ public class DynamicArrayTest {
     private DynamicArray array;
 
     @Before
-    public void SetUp() {
+    public void setUp() {
         array = new DynamicArray<String>(2);
     }
 
     @Test
-    public void GetAndSet() {
+    public void getAndSet() {
         array.set(0, "a");
         Assert.assertEquals("a", array.get(0));
     }
 
     @Test
-    public void Insert() {
+    public void insert() {
         array.add("a"); // 0
         array.add("b"); // 1
         array.add("c"); // 2
@@ -35,7 +35,7 @@ public class DynamicArrayTest {
     }
 
     @Test
-    public void DeleteFirst() {
+    public void deleteFirst() {
         array.add("a");
         array.add("b");
         array.add("c");
@@ -49,7 +49,7 @@ public class DynamicArrayTest {
     }
 
     @Test
-    public void DeleteMiddle() {
+    public void deleteMiddle() {
         array.add("a");
         array.add("b");
         array.add("c");
@@ -63,7 +63,7 @@ public class DynamicArrayTest {
     }
 
     @Test
-    public void DeleteLast() {
+    public void deleteLast() {
         array.add("a");
         array.add("b");
         array.add("c");
@@ -84,22 +84,22 @@ public class DynamicArrayTest {
     }
 
     @Test
-    public void Contains()  {
-        Assert.assertFalse(array.Contains("a"));
+    public void contains()  {
+        Assert.assertFalse(array.contains("a"));
         array.add("a");
-        Assert.assertTrue(array.Contains("a"));
+        Assert.assertTrue(array.contains("a"));
         array.add("b");
         array.add("b");
         array.add("c");
-        Assert.assertTrue(array.Contains("b"));
-        Assert.assertTrue(array.Contains("c"));
+        Assert.assertTrue(array.contains("b"));
+        Assert.assertTrue(array.contains("c"));
         array.delete(3);
-        Assert.assertFalse(array.Contains("c"));
+        Assert.assertFalse(array.contains("c"));
         array.delete(2);
-        Assert.assertTrue(array.Contains("b"));
+        Assert.assertTrue(array.contains("b"));
         array.delete(1);
-        Assert.assertFalse(array.Contains("b"));
+        Assert.assertFalse(array.contains("b"));
         array.delete(0);
-        Assert.assertFalse(array.Contains("a"));
+        Assert.assertFalse(array.contains("a"));
     }
 }
