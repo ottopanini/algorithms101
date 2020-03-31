@@ -1,34 +1,24 @@
 package datastructures;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 public class LinkedList {
 
     public class Node {
-        int data;
-        Node next;
+        private int data;
+        private Node next;
 
-        public Node(int data) {
+        Node(int data, Node next) {
             this.data = data;
+            this.next = next;
         }
     }
 
     public Node head;
 
     public void addFront(int data) {
-
-        // Create new node
-        Node newNode = new Node(data);
-
-        // if head...
-        if (head == null) {
-            head = newNode;
-            return;
-        }
-
-        // Set it's next to current head
-        newNode.next = head;
-
-        // Set current head equal to this new head
-        head = newNode;
+        head = new Node(data, head);
     }
 
     public int getFirst() {
@@ -36,57 +26,37 @@ public class LinkedList {
     }
 
     public int getLast() {
-        if (head == null) {
-            throw new IllegalStateException("Empty list!");
-        }
+        Optional<Node> node = getTail();
 
-        Node current = head;
+        return node.orElseThrow(() -> new NoSuchElementException("No items in list")).data;
+    }
 
-        // while we are not at the tail
-        while (current.next != null) {
-            current = current.next; // O(n)
-        }
+    private Optional<Node> getTail() {
+        Node node = head;
+        while (node != null && node.next != null)
+            node = node.next;
 
-        // We are at the tail
-        return current.data;
+        return Optional.ofNullable(node);
     }
 
     public void addBack(int data) {
-        Node newNode = new Node(data);
-
-        // if head... set and return
-        if (head == null) {
-            head = newNode;
-            return;
-        }
-
-        // Else starting at head...
-        Node current = head;
-
-        // Walk until to hit tail
-        while (current.next != null) {
-            current = current.next;
-        }
-
-        // Set current node to equal newNode
-        current.next = newNode;
+        Node back = new Node(data, null);
+        Optional<Node> tail = getTail();
+        if (tail.isPresent())
+            tail.get().next = back;
+        else
+            head = back;
     }
 
     public int size() {
-
-        if (head == null) {
-            return 0;
+        Node node = head;
+        int size = 0;
+        while (node != null) {
+            node = node.next;
+            size++;
         }
 
-        int count = 1;
-        Node current = head;
-
-        while (current.next != null) {
-            current = current.next;
-            count++;
-        }
-
-        return count;
+        return size;
     }
 
     public void clear() {
@@ -94,35 +64,23 @@ public class LinkedList {
     }
 
     public void deleteValue(int data) {
-
-        // if head
-        if (head == null) {
-            return;
-        }
+        Node node = head;
         if (head.data == data) {
             head = head.next;
             return;
         }
-
-        // else walk the list
-        Node current = head;
-
-        while (current.next != null) {
-            if (current.next.data == data) {
-                current.next = current.next.next;
-                return;
-            }
-            current = current.next;
+        while (node.next != null) {
+            Node prevNode = node;
+            node = node.next;
+            if (data == node.data)
+                prevNode.next = node.next;
         }
     }
 
     public void print() {
-        Node current = head;
-        while (current != null) {
-            System.out.println(current.data);
-            current = current.next;
-        }
-        System.out.println("");
+        int i = 0;
+        for (Node node = head; node.next != null; node = node.next, i++)
+            System.out.println("node[" + i + "]: " + node.data);
     }
 
 }
