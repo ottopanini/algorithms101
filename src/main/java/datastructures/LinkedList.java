@@ -17,20 +17,24 @@ public class LinkedList {
 
     public Node head;
 
+    //O(1)
     public void addFront(int data) {
         head = new Node(data, head);
     }
 
+    //O(1)
     public int getFirst() {
         return head.data;
     }
 
+    //O(n)
     public int getLast() {
-        Optional<Node> node = getTail();
+        Optional<Node> node = getTail(); //O(n)
 
         return node.orElseThrow(() -> new NoSuchElementException("No items in list")).data;
     }
 
+    //O(n)
     private Optional<Node> getTail() {
         Node node = head;
         while (node != null && node.next != null)
@@ -39,6 +43,7 @@ public class LinkedList {
         return Optional.ofNullable(node);
     }
 
+    //O(n)
     public void addBack(int data) {
         Node back = new Node(data, null);
         Optional<Node> tail = getTail();
@@ -48,6 +53,7 @@ public class LinkedList {
             head = back;
     }
 
+    //O(n)
     public int size() {
         Node node = head;
         int size = 0;
@@ -63,13 +69,14 @@ public class LinkedList {
         head = null;
     }
 
+    // O(n)
     public void deleteValue(int data) {
         Node node = head;
         if (head.data == data) {
             head = head.next;
             return;
         }
-        while (node.next != null) {
+        while (node.next != null) { //O(n)
             Node prevNode = node;
             node = node.next;
             if (data == node.data)

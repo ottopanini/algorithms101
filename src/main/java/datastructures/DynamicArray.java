@@ -17,21 +17,22 @@ public class DynamicArray<String> {
     }
 
     public String get(int index) {
-        return (String) data[index];
+        return (String) data[index]; //O(n)
     }
 
     public void set(int index, String value) {
         data[index] = value;
     }
 
+    //-> O(n) + O(n) + O(1) => O(n)
     public void insert(int index, String value) {
         if (size == initialCapacity)
-            resize();
+            resize(); //O(n)
 
-        for (int i = size; i > index; i--)
+        for (int i = size; i > index; i--) //O(n)
             data[i] = data[i - 1];
 
-        data[index] = value;
+        data[index] = value; //O(1)
         size++;
     }
 
